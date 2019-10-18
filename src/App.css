@@ -4,7 +4,7 @@
 
 .App-header {
   background-color: #282c34;
-  min-height: 100vh;
+  
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -17,15 +17,33 @@
   color: #09d3ac;
 }
 
+h1 {
+  margin: 10px;
+}
+h2 {
+  margin-top: 0;
+  margin-bottom: 3rem;
+}
+
+.flex-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+ul {
+  text-align: left;
+  list-style-type: square;
+}
+
 form {
   width: 460px;
   margin: auto 100px;
   padding: 32px;
   font-weight: bold;
-  background-color: rgba(79, 158, 55, 0.9);
+  background-color: rgba(129, 163, 118, 0.9);
   box-shadow: 2px 2px 10px 10px rgba(0, 0, 0, 0.1);
 }
-
 
 label {
   display: block;
@@ -42,4 +60,11 @@ form textarea {
   display: block;
   color: #4d2d52;
   border: 2px solid rgba(77, 45, 82, 0.8);
+}
+
+.error {
+  color: darkred;
+  margin-top: 0;
+  font-size: 1rem;
+  
 }

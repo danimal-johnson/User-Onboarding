@@ -1,6 +1,7 @@
 import React from "react";
 import { withFormik, Form, Field } from "formik";
 import * as Yup from "yup";
+import axios from "axios";
 
 // import styled from 'styled-components';
 
@@ -67,7 +68,7 @@ const OnboardForm = ({ values, handleChange, touched, errors }) => {
               <p className="error">{errors.tos}</p>
             )}
         </label>
-        <button>Submit!</button>
+        <button type="submit">Submit!</button>
       </Form>
     </div>
   );
@@ -84,14 +85,28 @@ const FormikOnboardForm = withFormik({
       }
     },
     validationSchema: Yup.object().shape({
-      name: Yup.string().required("Name is required."),
-      email: Yup.string().required("Email is required."),
-      password: Yup.string().required("You must choose a password"),
-      position: Yup.string()
-        .oneOf(["Standing","Seated","Lying Down","Fetal","Downward Dog"])
-        .required("You must choose a position from the list"),
-    })
-  })(OnboardForm)
+      name: Yup.string()
+        .required("Name is required.")
+        .min(2, "Your name is too short")
+        .max(50, "Your name is too long"),
 
+      email: Yup.string()
+        .required("Email is required.")
+        .email("Invalid email address."),
+
+      password: Yup.string()
+        .required("You must choose a password")
+        .min(9, "Your password is too short."),
+      position: Yup.string()
+        .oneOf(["Standing","Seated","Lying Down","Fetal","Downward Dog"]),
+      tos: Yup.boolean()
+        .test("is-true", "You must agree to the terms to continue", value => value === true)
+    }),
+    handleSubmit(values, {}) {
+      axios.post('https://reqres.in/api/users/', values)
+        .then(res => {console.log (res.data);})
+        .catch(err => console.log(err.response));
+    }
+  })(OnboardForm)
 
 export default FormikOnboardForm;
